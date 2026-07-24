@@ -6,11 +6,18 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import SlotDetails from './pages/SlotDetails';
 import Dashboard from './pages/Dashboard';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+        <Toaster 
+          position="bottom-right"
+          toastOptions={{
+            style: { background: '#333', color: '#fff' }
+          }} 
+        />
         <div className="min-h-screen bg-black text-white font-sans dark">
           <Navbar />
           <main>
