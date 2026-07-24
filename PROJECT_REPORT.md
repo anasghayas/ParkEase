@@ -328,6 +328,16 @@ The `/dashboard` route renders a different component based on `user.role`:
 
 ## 7. Testing & Validation
 
+### 7.0 Demo Accounts
+
+The following accounts are pre-registered in the system for testing:
+
+| Role | Email | Password |
+|---|---|---|
+| 🛡️ Admin | `admin@parkease.com` | `admin123` |
+| 🏢 Parking Owner | `p@example.com` | `123456` |
+| 🚗 Driver (Customer) | `d@example.com` | `123456` |
+
 ### 7.1 API Testing
 
 All 14 API endpoints were tested using direct HTTP requests:
