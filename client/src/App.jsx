@@ -5,8 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import SlotDetails from './pages/SlotDetails';
-
-const Dashboard = () => <div className="p-8 text-center text-2xl font-bold">Your Dashboard</div>;
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (

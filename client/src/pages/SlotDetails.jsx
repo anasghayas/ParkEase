@@ -7,6 +7,9 @@ const SlotDetails = () => {
   const { id } = useParams();
   const [slot, setSlot] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [bookingError, setBookingError] = useState('');
 
   useEffect(() => {
     const fetchSlot = async () => {
@@ -24,6 +27,30 @@ const SlotDetails = () => {
     };
     fetchSlot();
   }, [id]);
+
+  const handleBook = async () => {
+    try {
+      setBookingLoading(true);
+      setBookingError('');
+      setBookingSuccess(false);
+      
+      // Default booking for next 2 hours for demonstration
+      const startTime = new Date();
+      const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
+
+      await api.post('/bookings', {
+        slotId: id,
+        startTime,
+        endTime
+      });
+      
+      setBookingSuccess(true);
+    } catch (err) {
+      setBookingError(err.response?.data?.message || 'Failed to request booking');
+    } finally {
+      setBookingLoading(false);
+    }
+  };
 
   if (loading) return <div className="min-h-screen bg-black text-white p-8 text-center mt-20">Loading slot details...</div>;
   if (!slot) return <div className="min-h-screen bg-black text-white p-8 text-center mt-20">Slot not found.</div>;
@@ -75,12 +102,28 @@ const SlotDetails = () => {
                   <span className="text-gray-500"> / hour</span>
                 </div>
                 
-                <button className="w-full bg-white text-black py-4 rounded-lg font-bold text-lg hover:bg-gray-200 transition mb-4">
-                  Request Booking
-                </button>
-                <p className="text-center text-gray-500 text-sm flex items-center justify-center gap-1">
-                  <Clock size={14}/> You won't be charged yet
-                </p>
+                {bookingError && <div className="bg-red-900/50 border border-red-800 text-red-200 p-3 rounded mb-4 text-sm">{bookingError}</div>}
+                
+                {bookingSuccess ? (
+                  <div className="bg-green-900/50 border border-green-800 text-green-200 p-4 rounded mb-4 text-center">
+                    <CheckCircle2 className="mx-auto mb-2 text-green-400" size={32} />
+                    <p className="font-bold">Booking Requested!</p>
+                    <p className="text-sm mt-1">Check your dashboard for updates.</p>
+                  </div>
+                ) : (
+                  <>
+                    <button 
+                      onClick={handleBook}
+                      disabled={bookingLoading}
+                      className="w-full bg-white text-black py-4 rounded-lg font-bold text-lg hover:bg-gray-200 transition mb-4 disabled:opacity-50"
+                    >
+                      {bookingLoading ? 'Requesting...' : 'Request Booking (2 hrs)'}
+                    </button>
+                    <p className="text-center text-gray-500 text-sm flex items-center justify-center gap-1">
+                      <Clock size={14}/> You won't be charged yet
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </div>
