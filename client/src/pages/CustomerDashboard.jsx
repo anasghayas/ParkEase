@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Calendar, Clock, MapPin, CheckCircle2, XCircle, Clock3 } from 'lucide-react';
+import { Calendar, Clock, MapPin, CheckCircle2, XCircle, Clock3, Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const CustomerDashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -19,6 +20,17 @@ const CustomerDashboard = () => {
     };
     fetchBookings();
   }, []);
+
+  const handleCancelBooking = async (id) => {
+    if (!window.confirm('Are you sure you want to cancel this booking?')) return;
+    try {
+      await api.delete(`/bookings/${id}`);
+      setBookings(bookings.filter(b => b._id !== id));
+      toast.success('Booking cancelled successfully');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to cancel booking');
+    }
+  };
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -75,6 +87,14 @@ const CustomerDashboard = () => {
                     booking.status === 'rejected' ? 'text-red-500' : 'text-yellow-500'
                   }>{booking.status}</span>
                 </div>
+                {booking.status === 'pending' && (
+                  <button 
+                    onClick={() => handleCancelBooking(booking._id)}
+                    className="mt-2 text-xs text-red-500 hover:text-red-400 flex items-center gap-1 transition"
+                  >
+                    <Trash2 size={12} /> Cancel Booking
+                  </button>
+                )}
               </div>
             </div>
           ))}

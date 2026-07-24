@@ -5,12 +5,14 @@ const {
   createBooking, 
   getCustomerBookings, 
   getOwnerBookings, 
-  updateBookingStatus 
+  updateBookingStatus,
+  cancelBooking
 } = require('../controllers/bookingController');
 
 // Customer routes
 router.post('/', auth, restrictTo('customer'), createBooking);
 router.get('/my-bookings', auth, restrictTo('customer'), getCustomerBookings);
+router.delete('/:id', auth, restrictTo('customer'), cancelBooking);
 
 // Owner routes
 router.get('/requests', auth, restrictTo('owner'), getOwnerBookings);

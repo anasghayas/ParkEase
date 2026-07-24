@@ -64,3 +64,17 @@ exports.getMySlots = async (req, res) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+
+// @route   DELETE /api/slots/:id
+// @desc    Delete a slot (Owner only)
+exports.deleteSlot = async (req, res) => {
+  try {
+    const slot = await ParkingSlot.findOne({ _id: req.params.id, ownerId: req.user.id });
+    if (!slot) return res.status(404).json({ message: 'Slot not found or unauthorized' });
+
+    await slot.deleteOne();
+    res.json({ message: 'Slot deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};

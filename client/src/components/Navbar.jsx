@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white hover:text-gray-300">
-            <Car size={28} />
+            <img src="/favicon.png" alt="ParkEase Logo" className="w-8 h-8 object-contain" />
             ParkEase
           </Link>
           

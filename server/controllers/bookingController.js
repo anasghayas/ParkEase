@@ -87,3 +87,22 @@ exports.updateBookingStatus = async (req, res) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+
+// @route   DELETE /api/bookings/:id
+// @desc    Cancel a booking (Customer)
+exports.cancelBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findOne({ _id: req.params.id, customerId: req.user.id });
+    if (!booking) return res.status(404).json({ message: 'Booking not found or unauthorized' });
+
+    // Only allow cancellation if pending or maybe approved
+    if (booking.status === 'completed' || booking.status === 'rejected') {
+      return res.status(400).json({ message: 'Cannot cancel a completed or rejected booking' });
+    }
+
+    await booking.deleteOne();
+    res.json({ message: 'Booking cancelled successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};

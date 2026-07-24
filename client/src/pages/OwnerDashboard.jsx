@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
-import { Calendar, Clock, User, Check, X, Car } from 'lucide-react';
+import { Calendar, Clock, User, Check, X, Car, Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const OwnerDashboard = () => {
   const navigate = useNavigate();
@@ -35,6 +36,17 @@ const OwnerDashboard = () => {
       fetchData(); // Refresh the list
     } catch (err) {
       console.error('Failed to update status', err);
+    }
+  };
+
+  const deleteSlot = async (id) => {
+    if (!window.confirm('Are you sure you want to permanently delete this parking slot?')) return;
+    try {
+      await api.delete(`/slots/${id}`);
+      fetchData(); // Refresh the list
+      toast.success('Slot deleted successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete slot');
     }
   };
 
@@ -120,6 +132,12 @@ const OwnerDashboard = () => {
                       {slot.isApproved ? 'Active' : 'Pending Admin Approval'}
                     </span>
                   </div>
+                  <button 
+                    onClick={() => deleteSlot(slot._id)}
+                    className="w-full mt-4 flex items-center justify-center gap-2 bg-red-900/10 text-red-500 hover:bg-red-900/30 border border-red-900/30 px-3 py-2 rounded transition text-sm font-medium"
+                  >
+                    <Trash2 size={16} /> Remove Slot
+                  </button>
                 </div>
               </div>
             ))}
