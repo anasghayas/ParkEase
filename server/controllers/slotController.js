@@ -42,6 +42,18 @@ exports.getAllSlots = async (req, res) => {
   }
 };
 
+// @route   GET /api/slots/:id
+// @desc    Get a single slot by ID
+exports.getSlotById = async (req, res) => {
+  try {
+    const slot = await ParkingSlot.findById(req.params.id).populate('ownerId', 'name phone');
+    if (!slot) return res.status(404).json({ message: 'Slot not found' });
+    res.json(slot);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};
+
 // @route   GET /api/slots/my-slots
 // @desc    Get slots owned by the logged-in owner
 exports.getMySlots = async (req, res) => {
