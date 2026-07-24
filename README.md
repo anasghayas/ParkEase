@@ -476,6 +476,18 @@ node seedAdmin.js
 
 ---
 
+## 🧪 Demo Accounts
+
+Use these pre-registered accounts to test the application:
+
+| Role | Email | Password |
+|---|---|---|
+| 🛡️ **Admin** | `admin@parkease.com` | `admin123` |
+| 🏢 **Parking Owner** | `p@example.com` | `123456` |
+| 🚗 **Driver (Customer)** | `d@example.com` | `123456` |
+
+---
+
 ## 🔒 Authentication Flow
 
 1. User registers or logs in → server returns a **JWT token** (expires in 30 days)
