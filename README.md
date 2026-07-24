@@ -486,12 +486,6 @@ node seedAdmin.js
 
 ---
 
-## 📸 Screenshots
-
-> _Screenshots will be added after deployment_
-
----
-
 ## 📄 License
 
 This project is licensed under the **ISC License**.
