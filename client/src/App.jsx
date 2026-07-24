@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import SlotDetails from './pages/SlotDetails';
 import Dashboard from './pages/Dashboard';
+import AddSlot from './pages/AddSlot';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/add-slot" element={<AddSlot />} />
             </Routes>
           </main>
         </div>

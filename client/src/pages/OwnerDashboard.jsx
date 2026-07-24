@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { Calendar, Clock, User, Check, X, Car } from 'lucide-react';
 
 const OwnerDashboard = () => {
+  const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,7 +98,7 @@ const OwnerDashboard = () => {
       <div>
         <div className="flex justify-between items-end mb-6 border-b border-gray-800 pb-2">
           <h2 className="text-2xl font-bold text-white">My Parking Slots</h2>
-          <button className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition font-medium text-sm flex items-center gap-2">
+          <button onClick={() => navigate('/add-slot')} className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition font-medium text-sm flex items-center gap-2">
             <Car size={16}/> Add New Slot
           </button>
         </div>
