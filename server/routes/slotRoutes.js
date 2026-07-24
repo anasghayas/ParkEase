@@ -7,11 +7,11 @@ const { addSlot, getAllSlots, getMySlots, getSlotById, deleteSlot } = require('.
 // Public route to search slots
 router.get('/', getAllSlots);
 
-// Public route to get a single slot
-router.get('/:id', getSlotById);
-
 // Protected owner route to view their own slots
 router.get('/my-slots', auth, restrictTo('owner'), getMySlots);
+
+// Public route to get a single slot
+router.get('/:id', getSlotById);
 
 // Protected owner route to add a slot with image upload
 router.post('/', auth, restrictTo('owner'), upload.single('image'), addSlot);
