@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/slots', require('./routes/slotRoutes'));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB ParkEase'))
