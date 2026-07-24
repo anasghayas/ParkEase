@@ -496,8 +496,4 @@ node seedAdmin.js
 
 This project is licensed under the **ISC License**.
 
----
 
-<p align="center">
-  Built with ❤️ by <strong>Anas Ghayas</strong>
-</p>
