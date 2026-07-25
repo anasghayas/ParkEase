@@ -1,6 +1,6 @@
 # 🅿️ ParkEase — Smart Parking Slot Booking System
 
-> **Live Demo:** _[Link will be added here]_
+> **Live Demo:** [https://parkease-ecru.vercel.app/](https://parkease-ecru.vercel.app/)
 
 ParkEase is a full-stack **MERN** web application that connects parking slot owners with drivers looking for convenient parking. It features **three distinct user roles** (Customer, Owner, Admin), real-time booking management, Cloudinary image uploads, dynamic pricing, and a premium dark-themed UI.
 

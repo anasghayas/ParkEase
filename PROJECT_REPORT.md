@@ -5,7 +5,7 @@
 **Submitted by:** Anas Ghayas  
 **Date:** July 2026  
 **Repository:** [github.com/anasghayas/ParkEase](https://github.com/anasghayas/ParkEase)  
-**Live Demo:** _[Link will be added]_
+**Live Demo:** [https://parkease-ecru.vercel.app/](https://parkease-ecru.vercel.app/)
 
 ---
 
