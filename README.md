@@ -498,7 +498,7 @@ Use these pre-registered accounts to test the application:
 
 ---
 
-## 📄 License
+## 📄License
 
 This project is licensed under the **ISC License**.
 
