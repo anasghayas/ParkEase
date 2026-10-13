@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { auth, restrictTo } = require('../middleware/auth');
 const upload = require('../utils/upload');
-const { addSlot, getAllSlots, getMySlots, getSlotById, deleteSlot } = require('../controllers/slotController');
+const { addSlot, getAllSlots, getMySlots, getSlotById, deleteSlot, getLocations } = require('../controllers/slotController');
 
 // Public route to search slots
 router.get('/', getAllSlots);
+
+// Public route to get available locations for dropdowns
+router.get('/locations', getLocations);
 
 // Protected owner route to view their own slots
 router.get('/my-slots', auth, restrictTo('owner'), getMySlots);

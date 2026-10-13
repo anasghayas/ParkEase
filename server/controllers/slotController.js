@@ -4,12 +4,14 @@ const ParkingSlot = require('../models/ParkingSlot');
 // @desc    Add a new parking slot (Owners only)
 exports.addSlot = async (req, res) => {
   try {
-    const { address, city, slotSize, vehicleCompatibility, pricePerHour } = req.body;
+    const { address, area, city, state, slotSize, vehicleCompatibility, pricePerHour } = req.body;
 
     const newSlot = new ParkingSlot({
       ownerId: req.user.id,
       address,
+      area,
       city,
+      state,
       slotSize,
       vehicleCompatibility: vehicleCompatibility ? vehicleCompatibility.split(',') : [],
       pricePerHour,
@@ -27,16 +29,51 @@ exports.addSlot = async (req, res) => {
 // @desc    Get all approved slots (For Customers searching)
 exports.getAllSlots = async (req, res) => {
   try {
-    const { city } = req.query;
+    const { city, state, area } = req.query;
     
     // Build search query
     let query = { isApproved: true, isAvailable: true };
+    if (state) {
+      query.state = { $regex: new RegExp(state, 'i') };
+    }
     if (city) {
-      query.city = { $regex: new RegExp(city, 'i') }; // Case-insensitive text search
+      query.city = { $regex: new RegExp(city, 'i') };
+    }
+    if (area) {
+      query.area = { $regex: new RegExp(area, 'i') };
     }
 
     const slots = await ParkingSlot.find(query).populate('ownerId', 'name phone');
     res.json(slots);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// @route   GET /api/slots/locations
+// @desc    Get available states, cities, and areas for filtering
+exports.getLocations = async (req, res) => {
+  try {
+    const { state, city } = req.query;
+    let match = { isApproved: true, isAvailable: true };
+    if (state) match.state = state;
+    if (city) match.city = city;
+
+    if (!state && !city) {
+      const states = await ParkingSlot.distinct('state', match);
+      const cities = await ParkingSlot.distinct('city', match);
+      return res.json({ states: states.sort(), cities: cities.sort() });
+    }
+    if (state && !city) {
+      const cities = await ParkingSlot.distinct('city', match);
+      return res.json({ cities: cities.sort() });
+    }
+    if (city) {
+      const areas = await ParkingSlot.distinct('area', match);
+      return res.json({ areas: areas.sort() });
+    }
+    
+    res.json({});
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
