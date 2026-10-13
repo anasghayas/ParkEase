@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Users, Car, CheckSquare, Settings, Check, X } from 'lucide-react';
+import { Users, Car, CheckSquare, Settings, Check, X, MapPin } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -65,8 +65,8 @@ const AdminDashboard = () => {
         <div className="bg-[#111] border border-gray-800 p-6 rounded-xl flex items-center gap-4">
           <div className="p-4 bg-gray-900 rounded-lg text-white"><Settings size={24} /></div>
           <div>
-            <h3 className="text-gray-400 text-sm font-medium mb-1">Revenue</h3>
-            <p className="text-3xl font-bold text-white">${stats.totalRevenue.toFixed(2)}</p>
+            <h3 className="text-gray-400 text-sm font-medium mb-1">Platform Revenue</h3>
+            <p className="text-3xl font-bold text-white">₹{stats.totalRevenue.toFixed(0)}</p>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
             <thead>
               <tr className="border-b border-gray-800 text-gray-400 text-sm">
                 <th className="pb-3 font-medium">Slot Address</th>
-                <th className="pb-3 font-medium">City</th>
+                <th className="pb-3 font-medium">Location</th>
                 <th className="pb-3 font-medium">Owner</th>
                 <th className="pb-3 font-medium">Price/hr</th>
                 <th className="pb-3 font-medium">Status</th>
@@ -89,21 +89,23 @@ const AdminDashboard = () => {
               {slots.map(slot => (
                 <tr key={slot._id} className="border-b border-gray-800/50 hover:bg-gray-900/30 transition">
                   <td className="py-4 text-white font-medium">{slot.address}</td>
-                  <td className="py-4 text-gray-400">{slot.city}</td>
+                  <td className="py-4 text-gray-400">
+                    {slot.area ? `${slot.area}, ` : ''}{slot.city}{slot.state ? ` (${slot.state})` : ''}
+                  </td>
                   <td className="py-4 text-gray-400">{slot.ownerId?.name || 'Unknown'}</td>
-                  <td className="py-4 text-gray-400">${slot.pricePerHour}</td>
+                  <td className="py-4 text-gray-300 font-medium">₹{slot.pricePerHour}</td>
                   <td className="py-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${slot.isApproved ? 'bg-green-900/30 text-green-500' : 'bg-yellow-900/30 text-yellow-500'}`}>
-                      {slot.isApproved ? 'Active' : 'Pending'}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${slot.isApproved ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/40' : 'bg-amber-950/60 text-amber-400 border border-amber-800/40'}`}>
+                      {slot.isApproved ? 'Approved' : 'Pending'}
                     </span>
                   </td>
                   <td className="py-4 flex justify-end gap-2">
                     {!slot.isApproved ? (
-                      <button onClick={() => updateApproval(slot._id, true)} className="p-2 bg-green-900/30 text-green-500 hover:bg-green-900/50 rounded-lg transition" title="Approve">
+                      <button onClick={() => updateApproval(slot._id, true)} className="p-2 bg-emerald-950/60 text-emerald-400 hover:bg-emerald-900/60 rounded-lg transition" title="Approve">
                         <Check size={16} />
                       </button>
                     ) : (
-                      <button onClick={() => updateApproval(slot._id, false)} className="p-2 bg-red-900/30 text-red-500 hover:bg-red-900/50 rounded-lg transition" title="Suspend">
+                      <button onClick={() => updateApproval(slot._id, false)} className="p-2 bg-red-950/60 text-red-400 hover:bg-red-900/60 rounded-lg transition" title="Suspend">
                         <X size={16} />
                       </button>
                     )}
