@@ -2,291 +2,227 @@
 
 > **Live Demo:** [https://parkease-ecru.vercel.app/](https://parkease-ecru.vercel.app/)
 
-ParkEase is a full-stack **MERN** web application that connects parking slot owners with drivers looking for convenient parking. It features **three distinct user roles** (Customer, Owner, Admin), real-time booking management, Cloudinary image uploads, dynamic pricing, and a premium dark-themed UI.
+ParkEase is a production-ready, full-stack **MERN** web application that connects parking slot owners with drivers looking for convenient, secure parking across India. It features **three distinct user roles** (Customer, Owner, Admin), Pan-India 3-tier location filtering (State → City → Locality), real-time booking lifecycle management, Cloudinary image uploads, dynamic pricing in Indian Rupees (₹), and a premium dark-themed UI.
 
 ---
 
 ## 📑 Table of Contents
 
 - [Live Demo](#-parkease--smart-parking-slot-booking-system)
-- [Features](#-features)
+- [Key Features](#-features)
+- [Pan-India Coverage](#-pan-india-coverage)
+- [Demo Accounts](#-demo-accounts)
 - [Tech Stack](#-tech-stack)
 - [System Architecture](#-system-architecture)
 - [Database Schema](#-database-schema)
 - [API Endpoints](#-api-endpoints)
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Admin Seeding](#-admin-seeding)
-- [Screenshots](#-screenshots)
+- [Database Seeding](#-database-seeding)
 - [License](#-license)
 
 ---
 
 ## ✨ Features
 
-### 👤 Customer (Driver)
-- Register & login with JWT authentication
-- Search available parking slots by **city name** (case-insensitive)
-- View detailed slot information (address, size, vehicle compatibility, owner info, image)
-- **Dynamic booking** — select start date/time + duration in **Hours, Days, or Weeks**
-- Real-time **price calculator** shown before booking
-- View all bookings on a personal dashboard
-- **Cancel** pending/approved bookings with confirmation dialog
-- Toast notifications for all actions
+### 🚗 Customer (Driver)
+- **Pan-India Location Discovery:** Find parking by State, City, and Area/Locality with cascading dropdowns and quick metro pills.
+- **Direct Dashboard Discovery:** Browse featured available slots and book directly inside the Customer Dashboard.
+- **Dynamic Booking:** Select start date/time and duration in **Hours, Days, or Weeks**.
+- **Real-Time Price Calculator:** Instantly estimates total cost in Indian Rupees (₹).
+- **Authentication-Aware Booking Flow:** Unauthenticated users see "Login to Book Slot" with automatic return-to-slot redirection, preventing unhandled 401 errors.
+- **Reservation Management:** Track booking statuses (Pending, Approved, Rejected) and cancel pending requests.
 
-### 🏢 Owner (Parking Allotter)
-- Register as an "Owner" role
-- **Add new parking slots** with image upload (Cloudinary), address, city, size, vehicle type, and hourly rate
-- View all owned slots with approval status
-- **Remove/delete** parking slots they no longer want to list
-- View **pending booking requests** from customers
-- **Approve or Reject** each booking request
-- Dashboard showing total earnings, pending request count, and active slot count
+### 🏢 Owner (Parking Space Allotter)
+- **List Spaces:** Add parking slots with address, state, city, area/locality, slot size, vehicle compatibility, hourly rate (₹), and photo upload.
+- **Cloudinary CDN Integration:** Direct multipart image uploads to Cloudinary.
+- **Request Approvals:** Real-time dashboard to **Approve** or **Reject** driver booking requests.
+- **Slot Management:** View active/pending listings and remove listed slots at any time.
+- **Earnings Tracker:** Summary cards for total earnings, pending request counts, and listed slots.
 
 ### 🛡️ Admin
-- Pre-seeded admin account (`admin@parkease.com`)
-- View **system-wide statistics**: total users, total slots, total bookings, total revenue
-- View **all parking slots** (including unapproved ones)
-- **Approve or Suspend** any slot listing
-- Full management table with owner details and status indicators
+- **Platform Analytics:** Total registered users, total parking slots, total bookings, and platform revenue in ₹.
+- **Slot Verification & Oversight:** Review, approve, or suspend any parking slot listing across India.
+- **Pre-Seeded Access:** Instant platform oversight using the admin account.
 
-### 🎨 UI/UX
-- **Strictly dark theme** — pure black (`#000`) and dark gray (`#111`) palette, no purple/blue shades
-- Responsive layout (mobile-first with Tailwind CSS breakpoints)
-- Sticky navigation bar with custom favicon branding
-- Lucide React icons throughout
-- Hot toast notifications (bottom-right, dark styled)
-- Smooth hover transitions and micro-animations
-- Shadcn-inspired component styling
+### 🎨 UI/UX Design
+- **Tailored Dark Aesthetic:** Sleek black (`#000000`) and dark slate (`#111111`) palette.
+- **Responsive Layout:** Optimized for mobile, tablet, and desktop screens.
+- **Feedback & Notifications:** Toast notifications via React Hot Toast for all asynchronous actions.
+- **1-Click Quick Demo Login:** Instantly fill Driver or Owner credentials on the login screen.
+
+---
+
+## 🇮🇳 Pan-India Coverage
+
+The platform is seeded with **127 pre-approved parking slots** across **10 Indian States & 15+ Cities**:
+
+| State | Cities Covered | Sample Localities / Areas |
+|---|---|---|
+| **Jharkhand** | Jamshedpur, Ranchi | Bistupur, Sakchi, Sonari, Kadma, Telco, Lalpur, Doranda |
+| **Maharashtra** | Mumbai, Pune | Andheri, Bandra, Colaba, Juhu, Koregaon Park, Hinjewadi |
+| **Delhi NCR** | New Delhi, Central Delhi, Noida | Connaught Place, Saket, Dwarka, Karol Bagh, Sector 18 |
+| **Karnataka** | Bangalore | Koramangala, Indiranagar, Whitefield, MG Road, HSR Layout |
+| **West Bengal** | Kolkata | Park Street, Salt Lake, New Town, Howrah, Esplanade |
+| **Tamil Nadu** | Chennai | T. Nagar, Anna Nagar, Adyar, Velachery, Nungambakkam |
+| **Telangana** | Hyderabad | Banjara Hills, HITEC City, Gachibowli, Jubilee Hills |
+| **Uttar Pradesh** | Lucknow, Noida | Hazratganj, Gomti Nagar, Aminabad, Sector 62 |
+| **Rajasthan** | Jaipur | MI Road, C-Scheme, Vaishali Nagar, Malviya Nagar |
+| **Gujarat** | Ahmedabad | CG Road, SG Highway, Navrangpura, Satellite |
+
+---
+
+## 🧪 Demo Accounts
+
+Use these pre-registered accounts to test the application immediately:
+
+| Role | Email | Password | Pre-populated Data |
+|---|---|---|---|
+| 🛡️ **Admin** | `admin@parkease.com` | `admin123` | Full system metrics (127 slots, revenue in ₹) |
+| 🏢 **Parking Owner** | `p@example.com` | `123456` | Owns 45 slots across India; has pending requests to approve |
+| 🚗 **Driver (Customer)** | `d@example.com` | `123456` | Active pending & approved bookings; 1-click booking access |
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-| Technology | Purpose |
-|---|---|
-| **React 19** | UI library (component-based SPA) |
-| **Vite 8** | Lightning-fast dev server & bundler |
-| **React Router DOM 7** | Client-side routing |
-| **Tailwind CSS 3** | Utility-first CSS framework |
-| **Axios** | HTTP client for API calls |
-| **Lucide React** | Modern icon library |
-| **React Hot Toast** | Toast notification system |
-| **jwt-decode** | Client-side JWT token decoding |
+- **React 19** — Component-based SPA architecture
+- **Vite 8** — Fast bundler & dev server
+- **React Router DOM 7** — Client-side routing with query redirect preservation
+- **Tailwind CSS 3** — Utility-first modern responsive styling
+- **Axios** — HTTP client with Bearer token interceptor
+- **Lucide React** — Consistent modern iconography
+- **React Hot Toast** — Toast notifications
+- **jwt-decode** — Client-side token payload decoding
 
 ### Backend
-| Technology | Purpose |
-|---|---|
-| **Node.js** | JavaScript runtime |
-| **Express 5** | Web framework for REST API |
-| **Mongoose 9** | MongoDB ODM (Object Document Mapper) |
-| **JSON Web Token (JWT)** | Stateless authentication |
-| **bcryptjs** | Password hashing (10 salt rounds) |
-| **Cloudinary** | Cloud image storage for slot photos |
-| **Multer** | Multipart form-data parsing (file uploads) |
-| **multer-storage-cloudinary** | Direct Multer-to-Cloudinary bridge |
-| **CORS** | Cross-Origin Resource Sharing middleware |
-| **dotenv** | Environment variable management |
+- **Node.js** & **Express 5** — Scalable RESTful API
+- **Mongoose 9** — Schema modeling and MongoDB ODM
+- **JSON Web Token (JWT)** — Stateless token-based authentication
+- **bcryptjs** — Password hashing (10 salt rounds)
+- **Multer** & **Cloudinary** — Multipart form-data parser & cloud CDN image pipeline
+- **CORS & dotenv** — Cross-origin requests & environment configuration
 
 ### Database
-| Technology | Purpose |
-|---|---|
-| **MongoDB Atlas** | Cloud-hosted NoSQL database |
-
-### Dev Tools
-| Technology | Purpose |
-|---|---|
-| **Nodemon** | Auto-restart server on file changes |
-| **Concurrently** | Run client + server simultaneously |
-| **PostCSS + Autoprefixer** | CSS processing pipeline for Tailwind |
+- **MongoDB Atlas** — Cloud-hosted NoSQL cluster
 
 ---
 
-## 🏗️ System Architecture
+## 📐 System Architecture
 
+```mermaid
+flowchart TD
+    subgraph Client["Frontend (React 19 + Vite)"]
+        UI["React SPA (Port 5173 / Vercel)"]
+        AuthCtx["AuthContext (JWT State)"]
+        AxiosClient["Axios Interceptor (Bearer Token)"]
+        UI --> AuthCtx
+        AuthCtx --> AxiosClient
+    end
+
+    subgraph Server["Backend (Express 5 + Node.js)"]
+        API["Express REST API (Port 5001 / Render)"]
+        AuthMiddleware["JWT Auth and Role Guard Middleware"]
+        Controllers["Auth, Slot, Booking and Admin Controllers"]
+        Upload["Multer + Cloudinary Storage"]
+        
+        API --> AuthMiddleware
+        AuthMiddleware --> Controllers
+        API --> Upload
+    end
+
+    subgraph Data["Cloud Data Services"]
+        DB[("MongoDB Atlas Cloud Cluster")]
+        CDN["Cloudinary Media CDN"]
+    end
+
+    AxiosClient -->|"HTTP / REST API"| API
+    Controllers -->|"Mongoose ODM"| DB
+    Upload -->|"Image Upload"| CDN
 ```
-┌─────────────────────────────────────────────────────────┐
-│                        CLIENT                           │
-│              React 19 + Vite + Tailwind                 │
-│                   (Port 5173)                           │
-│                                                         │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───────────┐  │
-│  │  Home    │ │  Login   │ │ Register │ │ SlotDetail│  │
-│  │ (Search) │ │          │ │          │ │ (Booking) │  │
-│  └──────────┘ └──────────┘ └──────────┘ └───────────┘  │
-│  ┌──────────────────┐ ┌───────────┐ ┌───────────────┐  │
-│  │ CustomerDashboard│ │ OwnerDash │ │ AdminDashboard│  │
-│  └──────────────────┘ └───────────┘ └───────────────┘  │
-│                         │                               │
-│              Axios + JWT (Bearer Token)                 │
-└─────────────────────┬───────────────────────────────────┘
-                      │ HTTP REST API
-                      ▼
-┌─────────────────────────────────────────────────────────┐
-│                       SERVER                            │
-│              Express 5 + Node.js                        │
-│                   (Port 5001)                           │
-│                                                         │
-│  Middleware:  CORS → JSON Parser → Auth (JWT) → Routes  │
-│                                                         │
-│  ┌───────────┐ ┌───────────┐ ┌────────────┐            │
-│  │ authRoutes│ │ slotRoutes│ │bookingRoute│            │
-│  └───────────┘ └───────────┘ └────────────┘            │
-│  ┌────────────┐                                         │
-│  │ adminRoutes│                                         │
-│  └────────────┘                                         │
-│           │                          │                  │
-│     Mongoose ODM              Multer + Cloudinary       │
-└───────────┬──────────────────────────┬──────────────────┘
-            │                          │
-            ▼                          ▼
-   ┌────────────────┐        ┌────────────────┐
-   │  MongoDB Atlas  │        │   Cloudinary   │
-   │  (3 Collections)│        │  (Image CDN)   │
-   └────────────────┘        └────────────────┘
-```
-
-### Request Flow
-
-1. **User** interacts with the React frontend (port `5173`)
-2. **Axios** sends HTTP requests to the Express API (port `5001`) with JWT in `Authorization` header
-3. **Auth middleware** verifies the JWT token and attaches `req.user`
-4. **Role-based middleware** (`restrictTo`) gates routes by role (`customer`, `owner`, `admin`)
-5. **Controllers** execute business logic, interact with MongoDB via Mongoose
-6. **Multer** handles file uploads, pipes them directly to **Cloudinary**
-7. **Response** is sent back as JSON to the frontend
 
 ---
 
-## 📊 Database Schema
+## 🗄️ Database Schema
 
-### User Collection (`users`)
+### 1. User Collection (`users`)
+| Field | Type | Constraints | Description |
+|---|---|---|---|
+| `_id` | ObjectId | Auto-generated PK | Primary Key |
+| `name` | String | Required | Full name of user |
+| `email` | String | Required, Unique | Login email |
+| `password` | String | Required | bcrypt hash (10 salt rounds) |
+| `phone` | String | Optional | Contact number |
+| `role` | String | Enum: `customer` \| `owner` \| `admin` | User access tier (Default: `customer`) |
+| `isApproved` | Boolean | Default: `false` | Verification status (owners) |
+| `timestamps` | Date | Auto | `createdAt` & `updatedAt` |
 
-```
-┌─────────────────────────────────────────────────────┐
-│                     User                            │
-├─────────────┬───────────┬───────────────────────────┤
-│ Field       │ Type      │ Constraints               │
-├─────────────┼───────────┼───────────────────────────┤
-│ _id         │ ObjectId  │ Auto-generated (PK)       │
-│ name        │ String    │ Required                  │
-│ email       │ String    │ Required, Unique          │
-│ password    │ String    │ Required (bcrypt hashed)   │
-│ phone       │ String    │ Optional                  │
-│ role        │ String    │ Enum: customer|owner|admin │
-│             │           │ Default: "customer"       │
-│ isApproved  │ Boolean   │ Default: false            │
-│ createdAt   │ Date      │ Auto (timestamps: true)   │
-│ updatedAt   │ Date      │ Auto (timestamps: true)   │
-└─────────────┴───────────┴───────────────────────────┘
-```
+### 2. ParkingSlot Collection (`parkingslots`)
+| Field | Type | Constraints | Description |
+|---|---|---|---|
+| `_id` | ObjectId | Auto-generated PK | Primary Key |
+| `ownerId` | ObjectId | Required, Ref -> User | Owning parking provider |
+| `address` | String | Required | Street / Landmark address |
+| `area` | String | Required | Locality / Sector / Neighborhood |
+| `city` | String | Required | City name |
+| `state` | String | Required | Indian State / UT |
+| `slotSize` | String | Enum: `small` \| `medium` \| `large` | Slot dimension category |
+| `vehicleCompatibility` | [String] | Enum: `2-wheeler` \| `4-wheeler` | Allowed vehicle types |
+| `pricePerHour` | Number | Required | Hourly rate in Indian Rupees (₹) |
+| `image` | String | Cloudinary URL | Photo of the parking bay |
+| `isAvailable` | Boolean | Default: `true` | Slot availability toggle |
+| `isApproved` | Boolean | Default: `false` | Admin approval flag |
+| `timestamps` | Date | Auto | `createdAt` & `updatedAt` |
 
-### ParkingSlot Collection (`parkingslots`)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     ParkingSlot                             │
-├──────────────────────┬───────────┬──────────────────────────┤
-│ Field                │ Type      │ Constraints              │
-├──────────────────────┼───────────┼──────────────────────────┤
-│ _id                  │ ObjectId  │ Auto-generated (PK)      │
-│ ownerId              │ ObjectId  │ Required, Ref → User     │
-│ address              │ String    │ Required                 │
-│ city                 │ String    │ Required                 │
-│ slotSize             │ String    │ Enum: small|medium|large │
-│                      │           │ Default: "medium"        │
-│ vehicleCompatibility │ [String]  │ Enum: 2-wheeler|4-wheeler│
-│ pricePerHour         │ Number    │ Required                 │
-│ image                │ String    │ Cloudinary URL           │
-│ isAvailable          │ Boolean   │ Default: true            │
-│ isApproved           │ Boolean   │ Default: false           │
-│ createdAt            │ Date      │ Auto (timestamps: true)  │
-│ updatedAt            │ Date      │ Auto (timestamps: true)  │
-└──────────────────────┴───────────┴──────────────────────────┘
-```
-
-### Booking Collection (`bookings`)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Booking                                 │
-├──────────────┬───────────┬──────────────────────────────────┤
-│ Field        │ Type      │ Constraints                      │
-├──────────────┼───────────┼──────────────────────────────────┤
-│ _id          │ ObjectId  │ Auto-generated (PK)              │
-│ slotId       │ ObjectId  │ Required, Ref → ParkingSlot      │
-│ customerId   │ ObjectId  │ Required, Ref → User             │
-│ ownerId      │ ObjectId  │ Required, Ref → User             │
-│ startTime    │ Date      │ Required                         │
-│ endTime      │ Date      │ Required                         │
-│ totalPrice   │ Number    │ Required (auto-calculated)       │
-│ status       │ String    │ Enum: pending|approved|rejected  │
-│              │           │       |completed|cancelled       │
-│              │           │ Default: "pending"               │
-│ createdAt    │ Date      │ Auto (timestamps: true)          │
-│ updatedAt    │ Date      │ Auto (timestamps: true)          │
-└──────────────┴───────────┴──────────────────────────────────┘
-```
-
-### Entity Relationship Diagram
-
-```
-┌──────────┐       1:N       ┌──────────────┐       1:N       ┌──────────┐
-│   User   │────────────────▶│  ParkingSlot │◀───────────────│  Booking  │
-│ (Owner)  │  ownerId        │              │  slotId        │          │
-└──────────┘                 └──────────────┘                └──────────┘
-                                                                   │
-┌──────────┐       1:N                                             │
-│   User   │──────────────────────────────────────────────────────▶│
-│(Customer)│  customerId                                           │
-└──────────┘                                                       │
-                                                                   │
-┌──────────┐       (reads all)                                     │
-│   User   │──────────────────────────── reads ──────────────────▶│
-│ (Admin)  │  system-wide access                                   │
-└──────────┘
-```
+### 3. Booking Collection (`bookings`)
+| Field | Type | Constraints | Description |
+|---|---|---|---|
+| `_id` | ObjectId | Auto-generated PK | Primary Key |
+| `slotId` | ObjectId | Required, Ref -> ParkingSlot | Reserved space |
+| `customerId` | ObjectId | Required, Ref -> User | Driver creating reservation |
+| `ownerId` | ObjectId | Required, Ref -> User | Slot allotter |
+| `startTime` | Date | Required | Reservation start timestamp |
+| `endTime` | Date | Required | Reservation end timestamp |
+| `totalPrice` | Number | Required | Auto-computed total in ₹ |
+| `status` | String | Enum: `pending` \| `approved` \| `rejected` \| `completed` \| `cancelled` | Lifecycle status (Default: `pending`) |
+| `timestamps` | Date | Auto | `createdAt` & `updatedAt` |
 
 ---
 
 ## 🔌 API Endpoints
 
 ### Authentication (`/api/auth`)
-
 | Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| `POST` | `/api/auth/register` | Public | Register a new user (customer/owner) |
-| `POST` | `/api/auth/login` | Public | Login and receive JWT token |
+|---|---|---|---|
+| `POST` | `/api/auth/register` | Public | Register new customer or owner |
+| `POST` | `/api/auth/login` | Public | Authenticate and return JWT token |
 
 ### Parking Slots (`/api/slots`)
-
 | Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| `GET` | `/api/slots` | Public | Get all approved & available slots (supports `?city=` query) |
-| `GET` | `/api/slots/my-slots` | Owner | Get all slots owned by the logged-in owner |
-| `GET` | `/api/slots/:id` | Public | Get a single slot by ID |
-| `POST` | `/api/slots` | Owner | Add a new parking slot (multipart form with image) |
-| `DELETE` | `/api/slots/:id` | Owner | Delete a parking slot owned by the user |
+|---|---|---|---|
+| `GET` | `/api/slots` | Public | Get approved slots (supports `?state=`, `?city=`, `?area=`) |
+| `GET` | `/api/slots/locations` | Public | Fetch available states, cities, and localities for dropdowns |
+| `GET` | `/api/slots/my-slots` | Owner | Get slots owned by logged-in provider |
+| `GET` | `/api/slots/:id` | Public | Get single slot details |
+| `POST` | `/api/slots` | Owner | Add new parking slot (multipart form with image) |
+| `DELETE` | `/api/slots/:id` | Owner | Delete a parking slot |
 
 ### Bookings (`/api/bookings`)
-
 | Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| `POST` | `/api/bookings` | Customer | Create a new booking request |
-| `GET` | `/api/bookings/my-bookings` | Customer | Get all bookings for the logged-in customer |
-| `GET` | `/api/bookings/requests` | Owner | Get all booking requests for the owner's slots |
-| `PATCH` | `/api/bookings/:id/status` | Owner | Approve/reject/complete a booking |
-| `DELETE` | `/api/bookings/:id` | Customer | Cancel a pending or approved booking |
+|---|---|---|---|
+| `POST` | `/api/bookings` | Customer | Request a new parking reservation |
+| `GET` | `/api/bookings/my-bookings` | Customer | View personal booking history and statuses |
+| `GET` | `/api/bookings/requests` | Owner | View booking requests for owned slots |
+| `PATCH` | `/api/bookings/:id/status` | Owner | Approve or reject a booking request |
+| `DELETE` | `/api/bookings/:id` | Customer | Cancel a pending reservation |
 
 ### Admin (`/api/admin`)
-
 | Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| `GET` | `/api/admin/stats` | Admin | Get system-wide statistics (users, slots, bookings, revenue) |
-| `GET` | `/api/admin/slots` | Admin | Get all slots including unapproved |
-| `PATCH` | `/api/admin/slots/:id/approve` | Admin | Approve or suspend a parking slot listing |
+|---|---|---|---|
+| `GET` | `/api/admin/stats` | Admin | Get system metrics (users, slots, bookings, revenue) |
+| `GET` | `/api/admin/slots` | Admin | Get all slots (including pending) |
+| `PATCH` | `/api/admin/slots/:id/approve` | Admin | Toggle slot approval status |
 
 ---
 
@@ -294,71 +230,49 @@ ParkEase is a full-stack **MERN** web application that connects parking slot own
 
 ```
 ParkEase/
-├── package.json                  # Root: concurrently script (dev:all)
-│
-├── server/                       # ── Backend (Express + Node.js) ──
-│   ├── server.js                 # Entry point: Express app, DB connect, route mounting
-│   ├── seedAdmin.js              # One-time script to create admin account
-│   ├── .env                      # Environment variables (not committed)
-│   ├── package.json              # Server dependencies
-│   │
-│   ├── models/
-│   │   ├── User.js               # User schema (name, email, password, role, isApproved)
-│   │   ├── ParkingSlot.js         # Parking slot schema (address, city, size, price, image)
-│   │   └── Booking.js            # Booking schema (slot, customer, owner, times, price, status)
-│   │
-│   ├── controllers/
-│   │   ├── authController.js     # Register & Login (bcrypt + JWT)
-│   │   ├── slotController.js     # CRUD for parking slots
-│   │   ├── bookingController.js  # Create, read, update status, cancel bookings
-│   │   └── adminController.js    # Stats, slot management, approvals
-│   │
-│   ├── routes/
-│   │   ├── authRoutes.js         # POST /register, POST /login
-│   │   ├── slotRoutes.js         # GET/POST/DELETE slots
-│   │   ├── bookingRoutes.js      # GET/POST/PATCH/DELETE bookings
-│   │   └── adminRoutes.js        # GET stats, GET/PATCH slots (admin-only)
-│   │
-│   ├── middleware/
-│   │   └── auth.js               # JWT verification + role-based access (restrictTo)
-│   │
-│   └── utils/
-│       └── upload.js             # Cloudinary + Multer config for image uploads
-│
-├── client/                       # ── Frontend (React + Vite) ──
-│   ├── index.html                # HTML entry point with favicon
-│   ├── vite.config.js            # Vite configuration (React plugin)
-│   ├── tailwind.config.js        # Tailwind CSS configuration
-│   ├── postcss.config.js         # PostCSS plugins
-│   ├── package.json              # Client dependencies
-│   │
+├── client/                     # Frontend (React 19 + Vite 8)
 │   ├── public/
-│   │   └── favicon.png           # Custom ParkEase favicon
-│   │
-│   └── src/
-│       ├── main.jsx              # React DOM root entry point
-│       ├── App.jsx               # Router setup & route definitions
-│       ├── index.css             # Global styles + Tailwind directives
-│       │
-│       ├── context/
-│       │   └── AuthContext.jsx   # React Context for auth state (login, register, logout)
-│       │
-│       ├── components/
-│       │   └── Navbar.jsx        # Sticky top navbar with logo, dashboard link, logout
-│       │
-│       ├── pages/
-│       │   ├── Home.jsx              # Landing page + slot search by city
-│       │   ├── Login.jsx             # Login form (email + password)
-│       │   ├── Register.jsx          # Registration form (name, email, password, phone, role)
-│       │   ├── SlotDetails.jsx       # Slot detail view + dynamic booking form
-│       │   ├── Dashboard.jsx         # Role-based dashboard router
-│       │   ├── CustomerDashboard.jsx # Customer bookings + cancel feature
-│       │   ├── OwnerDashboard.jsx    # Owner slots, requests, approve/reject, delete slot
-│       │   ├── AdminDashboard.jsx    # Admin stats + slot approval table
-│       │   └── AddSlot.jsx           # Form to create a new parking slot (with image upload)
-│       │
-│       └── utils/
-│           └── api.js            # Axios instance with baseURL + JWT interceptor
+│   │   └── favicon.png         # Custom ParkEase branding
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── Navbar.jsx      # Sticky navbar with direct Find Parking link
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx # Authentication state & token management
+│   │   ├── pages/
+│   │   │   ├── Home.jsx        # Cascading State -> City -> Locality search
+│   │   │   ├── Login.jsx       # Auth form with 1-click Quick Demo logins
+│   │   │   ├── Register.jsx    # User registration form
+│   │   │   ├── SlotDetails.jsx # Slot view with dynamic price calculator in ₹
+│   │   │   ├── Dashboard.jsx   # Role-based dashboard router
+│   │   │   ├── CustomerDashboard.jsx # Driver bookings & embedded available slots
+│   │   │   ├── OwnerDashboard.jsx    # Owner slots, requests, earnings in ₹
+│   │   │   ├── AdminDashboard.jsx    # Platform statistics & approval table
+│   │   │   └── AddSlot.jsx     # Add slot with State, City, Locality, ₹
+│   │   ├── utils/
+│   │   │   └── api.js          # Axios client with auth interceptor
+│   │   ├── App.jsx             # React Router configuration
+│   │   ├── index.css           # Tailwind CSS directives
+│   │   └── main.jsx            # React root mount
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+│
+├── server/                     # Backend (Express 5 + Node.js)
+│   ├── controllers/            # Controller handlers
+│   ├── middleware/
+│   │   └── auth.js             # JWT verification & role authorization
+│   ├── models/                 # Mongoose schemas (User, ParkingSlot, Booking)
+│   ├── routes/                 # Express API routes
+│   ├── utils/
+│   │   └── upload.js           # Cloudinary + Multer file storage
+│   ├── seedAdmin.js            # Admin seeder script
+│   ├── seedSlots.js            # Pan-India 127 slots seeder script
+│   ├── server.js               # Express application entrypoint
+│   └── package.json
+│
+├── package.json                # Root scripts (npm run dev:all)
+├── README.md                   # Project documentation
+└── PROJECT_REPORT.md           # Academic & technical report
 ```
 
 ---
@@ -366,140 +280,46 @@ ParkEase/
 ## 🚀 Getting Started
 
 ### Prerequisites
+- **Node.js** v18+ & **npm**
+- **MongoDB Atlas** cluster URI
+- **Cloudinary** account credentials
 
-- **Node.js** v18+ installed
-- **npm** v9+ installed
-- A **MongoDB Atlas** account (free tier works)
-- A **Cloudinary** account (free tier works)
-
-### 1. Clone the Repository
-
+### 1. Installation
 ```bash
 git clone https://github.com/anasghayas/ParkEase.git
 cd ParkEase
-```
 
-### 2. Install Dependencies
-
-```bash
-# Install root dependencies (concurrently)
+# Install dependencies across all packages
 npm install
-
-# Install server dependencies
-cd server
-npm install
-
-# Install client dependencies
-cd ../client
-npm install
-
+cd server && npm install
+cd ../client && npm install
 cd ..
 ```
 
-### 3. Configure Environment Variables
-
-Create a `.env` file inside the `server/` directory:
-
-```bash
-# server/.env
-
-PORT=5001
-MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>
-JWT_SECRET=your_jwt_secret_key_here
-
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
-
-> **MongoDB Atlas Setup:**
-> 1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-> 2. Create a database user
-> 3. Under **Network Access**, add `0.0.0.0/0` to allow connections from anywhere
-> 4. Copy the connection string and paste it as `MONGO_URI`
-
-> **Cloudinary Setup:**
-> 1. Sign up at [cloudinary.com](https://cloudinary.com)
-> 2. Copy your Cloud Name, API Key, and API Secret from the Dashboard
-
-### 4. Seed the Admin Account
-
-```bash
-cd server
-node seedAdmin.js
-cd ..
-```
-
-This creates:
-- **Email:** `admin@parkease.com`
-- **Password:** `admin123`
-
-### 5. Run the Application
-
+### 2. Running Locally
+Start both backend (`http://localhost:5001`) and frontend (`http://localhost:5173`) concurrently:
 ```bash
 npm run dev:all
 ```
 
-This uses **concurrently** to start both:
-- 🖥️ **Server** → `http://localhost:5001` (Express + Nodemon)
-- 🌐 **Client** → `http://localhost:5173` (Vite dev server)
-
 ---
 
-## 🔐 Environment Variables
+## 🔑 Database Seeding
 
-| Variable | Description | Example |
-|---|---|---|
-| `PORT` | Backend server port | `5001` |
-| `MONGO_URI` | MongoDB Atlas connection string | `mongodb+srv://user:pass@cluster.mongodb.net/parkease` |
-| `JWT_SECRET` | Secret key for signing JWT tokens | `my_super_secret_key` |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | `mycloud` |
-| `CLOUDINARY_API_KEY` | Cloudinary API key | `123456789` |
-| `CLOUDINARY_API_SECRET` | Cloudinary API secret | `abcdef123` |
-
----
-
-## 👑 Admin Seeding
-
-The admin account is **not** registered through the UI — it is seeded directly into the database using a script:
+Populate the database with pre-configured accounts and 127 Pan-India slots:
 
 ```bash
 cd server
+
+# 1. Seed Super Admin
 node seedAdmin.js
+
+# 2. Seed 127 Pan-India Parking Slots & Demo Accounts
+node seedSlots.js
 ```
-
-| Field | Value |
-|---|---|
-| **Email** | `admin@parkease.com` |
-| **Password** | `admin123` |
-| **Role** | `admin` |
-
----
-
-## 🧪 Demo Accounts
-
-Use these pre-registered accounts to test the application:
-
-| Role | Email | Password |
-|---|---|---|
-| 🛡️ **Admin** | `admin@parkease.com` | `admin123` |
-| 🏢 **Parking Owner** | `p@example.com` | `123456` |
-| 🚗 **Driver (Customer)** | `d@example.com` | `123456` |
-
----
-
-## 🔒 Authentication Flow
-
-1. User registers or logs in → server returns a **JWT token** (expires in 30 days)
-2. Token is stored in **localStorage** on the client
-3. Every API request includes the token in the `Authorization: Bearer <token>` header via an **Axios interceptor**
-4. Server **auth middleware** verifies the token and attaches `req.user` (containing `id`, `role`, `name`)
-5. **restrictTo middleware** checks if the user's role matches the required role for that route
 
 ---
 
 ## 📄 License
 
 This project is licensed under the **ISC License**.
-
-
